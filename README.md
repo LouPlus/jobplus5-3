@@ -7,3 +7,5 @@ LouPlus Team 3 https://www.shiyanlou.com/louplus/python
 * [ZFane](https://github.com/Z-Fane)
 
 * [大鸡脖](https://github.com/liuzhibo)
+
+* [jerry123je](https://github.com/jerry123je) 
