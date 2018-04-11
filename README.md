@@ -11,27 +11,10 @@ LouPlus Team 3 <https://www.shiyanlou.com/louplus/python>
 - [jerry123je](https://github.com/jerry123je)
 
 ## Databases
+>user
 
-> 1
-
-Tables   |      Are      |  Cool
--------- | :-----------: | ----:
-col 1 is | left-aligned  | $1600
-col 2 is |   centered    |   $12
-col 3 is | right-aligned |    $1
-
-> 2
-
-水果 | 价格 | 数量
--- | -: | --
-香蕉 | $1 | 5
-苹果 | $1 | 6
-草莓 | $1 | 7
-
-> 3
-
-水果 | 价格 | 数量
--- | -- | --
-香蕉 | $1 | 5
-苹果 | $1 | 6
-草莓 | $1 | 7
+字段       | 类型       | 注解
+:------- | :------- | :-
+userId | INT(10) | 用户ID
+userEmail  | VARCHAR(255)  |登录邮箱  
+userPassword  | VARCHAR(255)  |登录密码  
