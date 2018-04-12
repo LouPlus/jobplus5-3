@@ -1,0 +1,11 @@
+.show-more{
+    text-align: center;
+}
+.show-more a{
+    color: #5cb85c;
+    background: #ffffff;
+    padding: 20px 100px;
+}
+.footer{
+    border-top: 1px solid #dddddd;
+}

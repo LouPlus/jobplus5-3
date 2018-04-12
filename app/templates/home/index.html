@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Jobplus</a>
+            </div>
+            <div class="navbar-left">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">职位</a></li>
+                    <li><a href="#">公司</a></li>
+                </ul>
+            </div>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">用户注册</a></li>
+                    <li><a href="#">企业注册</a></li>
+                    <li><a href="#">登录</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>JOBPLUS</h1>
+            <p>领先的互联网求职、招聘平台</p>
+        </div>
+    </div>
+    <div class="container">
+        <ul class="nav nav-tabs list-title">
+            <li role="presentation" class="active"><a href="#">最新职位</a></li>
+        </ul>
+        <div class="job-list">
+        </div>
+        <div class="show-more">
+            <a href="#" class="btn btn-lg btn-success">更多</a>
+        </div>
+        <ul class="nav nav-tabs list-title">
+            <li role="presentation" class="active"><a href="#">最新公司</a></li>
+        </ul>
+        <div class="company-list">
+        </div>
+        <div class="show-more">
+            <a href="#" class="btn  btn-lg btn-success">更多</a>
+        </div>
+        <div class="footer">Copyright © 2017 By 实验楼</div>
+    </div>
+{% endblock %}
