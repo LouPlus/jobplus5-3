@@ -1,0 +1,22 @@
+{% macro render_form(form,url) %}
+    <form action="{{ url }}" method="post">
+        {{ form.hidden_tag() }}
+        {% for field in form %}
+            {% if field.type == 'CSRFTokenField' %}
+                {{ '' }}
+                <!-- SubmitField 单独特殊处理 -->
+            {% elif field.type == 'SubmitField' %}
+                {{ form.submit(class='btn btn-primary', type='submit') }}
+                <!-- BooleanField 单独特殊处理 -->
+            {% elif field.type == 'BooleanField' %}
+                <div class="checkbox">
+                    <label>{{ field() }} {{ field.label.text }}</label>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    {{ field.label }} {{ field(class='form-control') }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </form>
+{% endmacro %}
