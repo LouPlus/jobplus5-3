@@ -60,7 +60,7 @@ jobTag         | VARCHAR(255)  | 工作标签
 jobDescription | VARCHAR(4096) | 工作描述
 jobAddress     | VARCHAR(1024) | 工作地点
 jobSalaryL     | INT(10)       | 最低工资
-jobSalaryU     | INT(10)       | 最高工资
+jobSalaryH     | INT(10)       | 最高工资
 jobExperience  | VARCHAR(255)  | 工作经历
 jobEducation   | VARCHAR(255)  | 学历要求
 jobCompany     | INT(10)       | 所属公司ID
