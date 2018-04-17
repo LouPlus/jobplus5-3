@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_migrate import Migrate
-from app.models import db
+from app.models import db, User
 from config import configs
 from flask_login import LoginManager
 
@@ -17,15 +17,15 @@ def register_extensions(app):
     Migrate(app,db)
     login_manager=LoginManager()
     login_manager.init_app(app)
+
     @login_manager.user_loader
     def user_loader(id):
-        pass
-        # return User.query.get(id)
+        return User.query.get(id)
+
     login_manager.login_view='home.login'
 
 def register_blueprints(app):
-    from .main import home
-    from .main import admin
+    from .main import home,admin
     app.register_blueprint(home)
     app.register_blueprint(admin)
 

@@ -17,29 +17,11 @@ LouPlus Team 3 <https://www.shiyanlou.com/louplus/python>
 字段           | 类型           | 注解
 :----------- | :----------- | :-----
 userId       | INT(10)      | 用户ID
+userName     | VARCHAR(255) | 用户姓名
 userEmail    | VARCHAR(255) | 登录邮箱
 userPassword | VARCHAR(255) | 登录密码
 userRole     | INT(10)      | 用户角色
-created      | DATETIME     | 数据创建时间
-updated      | DATETIME     | 数据修改时间
-
-> jobseeker表
-
-字段              | 类型            | 注解
-:-------------- | :------------ | :-----
-jobseekerId     | INT(10)       | 求职者ID
-jobseekerName   | VARCHAR(255)  | 求职者名称
-jobseekerPhone  | VARCHAR(20)   | 求职者电话
-jobseekerResume | VARCHAR(1024) | 简历链接
-created         | DATETIME      | 数据创建时间
-updated         | DATETIME      | 数据修改时间
-
-> company表
-
-字段                  | 类型            | 注解
-:------------------ | :------------ | :-------
-companyId           | INT(10)       | 公司ID
-companyName         | VARCHAR(255)  | 公司名称
+userPhone    | VARCHAR(255) | 用户电话
 compangHomepage     | VARCHAR(1024) | 公司主页
 companyField        | VARCHAR(20)   | 公司领域
 companyFinancing    | VARCHAR(20)   | 公司融资情况
@@ -47,8 +29,12 @@ companyCity         | VARCHAR(20)   | 公司所在城市
 companyLogo         | VARCHAR(255)  | 公司Logo链接
 companyIntroduction | VARCHAR(1024) | 公司一句话简介
 companyDescription  | VARCHAR(4096) | 公司详细描述
-created             | DATETIME      | 数据创建时间
-updated             | DATETIME      | 数据修改时间
+companySlug         | VARCHAR(255)  | 公司固定链接
+jobseekerName   | VARCHAR(255)  | 求职者名称
+jobseekerResume | VARCHAR(1024) | 简历链接
+created      | DATETIME     | 数据创建时间
+updated      | DATETIME     | 数据修改时间
+
 
 > job表
 
