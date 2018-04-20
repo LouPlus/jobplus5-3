@@ -35,7 +35,7 @@ class RegisterForm(FlaskForm):
             user.user_role=User.ROLE_JOBSEEKER
         elif type=='company':
             user.user_role=User.ROLE_COMPANY
-            user.company_detail=Company()
+            user.company=Company()
         else:
             abort(404)
         db.session.add(user)

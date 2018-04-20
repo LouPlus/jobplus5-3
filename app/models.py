@@ -45,8 +45,8 @@ class User(Base, UserMixin):
     user_role = db.Column(db.Integer, nullable=False, default=ROLE_JOBSEEKER)
     user_phone = db.Column(db.String(15), nullable=True)
 
-    jobseeker_experience = db.Column(db.Integer, nullable=True)
-    jobseeker_resume = db.Column(db.String(1024), nullable=True)
+    user_experience = db.Column(db.Integer, nullable=True)
+    user_resume = db.Column(db.String(1024), nullable=True)
     company=db.relationship('Company',uselist=False)
 
     @property
