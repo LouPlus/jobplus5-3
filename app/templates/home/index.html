@@ -12,18 +12,58 @@
         <ul class="nav nav-tabs list-title">
             <li role="presentation" class="active"><a href="#">最新职位</a></li>
         </ul>
-        <div class="job-list">
+        <div class="job-list clearfix">
+            {% for job in job_list %}
+                <div class="col-md-4">
+                    <div class="job">
+                        <div class="caption">
+                            <h3>{{ job.job_name }}</h3>
+                            <p>经验{{ job.job_experience }} 学历{{ job.job_education }}</p>
+                            <div>{{ job.job_tag }}</div>
+                        </div>
+                        <hr>
+
+                        <div class="media">
+                            <div class="media-left">
+                                <a href=""><img
+                                        src="https://static.lagou.com/thumbnail_160x160/image1/M00/00/24/Cgo8PFTUWHyANEpfAABnz-1mqGc824.jpg"
+                                        alt="" class="pull-left" width="40px" height="40px"></a>
+                            </div>
+                            <div class="media-right">
+                                <a href=""><h4 class="media-heading">{{ job.Company.user.user_name }}</h4>
+                                </a>
+                                <span>{{ job.Company.company_introduction }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
         </div>
         <div class="show-more">
-            <a href="#" class="btn btn-lg btn-success">更多</a>
+            <a href="/job" class="btn btn-lg btn-success">更多</a>
         </div>
         <ul class="nav nav-tabs list-title">
             <li role="presentation" class="active"><a href="#">最新公司</a></li>
         </ul>
-        <div class="company-list">
+        <div class="company-list clearfix">
+            {% for company in company_list %}
+                <div class="col-md-3">
+                    <div class="company">
+                        <a href="{{ url_for('company.detail',company_id=company.id) }}">
+                            <img src="https://static.lagou.com/thumbnail_160x160/i/image2/M00/13/BF/CgotOVnwYgKAQxwQAADd4llXXGw444.png"
+                                 alt="">
+                            <h3>{{ company.user.user_name }}</h3>
+                            <p>{{ company.company_introduction }}</p>
+                            <hr>
+                            <p>在招职位:7</p>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
         <div class="show-more">
-            <a href="#" class="btn  btn-lg btn-success">更多</a>
+            <a href="/company" class="btn  btn-lg btn-success">更多</a>
         </div>
 
     </div>

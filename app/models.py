@@ -15,65 +15,77 @@ class Base(db.Model):
                            onupdate=datetime.utcnow)
 
 
-class Jobseeker(db.Model):
-    __tablename__ = 'jobseeker'
-    __abstract__=True
-    jobseekerExperience = db.Column(db.Integer, nullable=True)
-    jobseekerResume = db.Column(db.String(1024), nullable=True)
-
-
 class Company(db.Model):
     __tablename__ = 'company'
-    __abstract__=True
-    companyHomepage = db.Column(db.String(1024),nullable=True)
-    companyField = db.Column(db.String(20), nullable=True)
-    companyFinancing = db.Column(db.String(20), nullable=True)
-    companyCity = db.Column(db.String(20), nullable=True)
-    companyLogo = db.Column(db.String(255), nullable=True)
-    companyIntroduction = db.Column(db.String(1024), nullable=True)
-    companyDescription = db.Column(db.String(4096), nullable=True)
-    companySlug=db.Column(db.String(1024),nullable=True)
+    id = db.Column(db.Integer, primary_key=True,
+                   nullable=False, unique=True)
+    company_homepage = db.Column(db.String(20),nullable=True)
+    company_field = db.Column(db.String(20), nullable=True)
+    company_financing = db.Column(db.String(20), nullable=True)
+    company_city = db.Column(db.String(20), nullable=True)
+    company_logo = db.Column(db.String(255), nullable=True)
+    company_introduction = db.Column(db.String(1024), nullable=True)
+    company_description = db.Column(db.String(4096), nullable=True)
+    company_slug=db.Column(db.String(20),nullable=True)
+    job=db.relationship('Job',backref='Company')
+    user_id=db.Column(db.Integer,db.ForeignKey('user.id',ondelete='SET NULL'))
+    user=db.relationship('User',uselist=False,backref=db.backref('Company',uselist=False))
 
 
-class User(Base, UserMixin, Jobseeker, Company):
+class User(Base, UserMixin):
     __tablename__ = 'user'
     ROLE_JOBSEEKER = 10
     ROLE_COMPANY = 20
     ROLE_ADMIN = 30
-
     id = db.Column(db.Integer, primary_key=True,
                    nullable=False, unique=True)
-    userName = db.Column(db.String(255), nullable=False)
-    userEmail = db.Column(db.String(255), nullable=False, unique=True)
-    _userPassword = db.Column('userPassword', db.String(256), nullable=False)
-    userRole = db.Column(db.Integer, nullable=False, default=ROLE_JOBSEEKER)
-    userPhone = db.Column(db.String(15), nullable=True)
+    user_name = db.Column(db.String(255), nullable=False)
+    user_email = db.Column(db.String(255), nullable=False, unique=True)
+    _user_password = db.Column('userPassword', db.String(256), nullable=False)
+    user_role = db.Column(db.Integer, nullable=False, default=ROLE_JOBSEEKER)
+    user_phone = db.Column(db.String(15), nullable=True)
+
+    user_experience = db.Column(db.Integer, nullable=True)
+    user_resume = db.Column(db.String(1024), nullable=True)
+    company=db.relationship('Company',uselist=False)
 
     @property
-    def userPassword(self):
-        return self._userPassword
+    def user_password(self):
+        return self._user_password
 
-    @userPassword.setter
-    def userPassword(self, orig_password):
-        self._userPassword = generate_password_hash(orig_password)
+    @user_password.setter
+    def user_password(self, orig_password):
+        self._user_password = generate_password_hash(orig_password)
 
     def check_password(self, password):
-        return check_password_hash(self._userPassword, password)
+        return check_password_hash(self._user_password, password)
+    @property
+    def is_admin(self):
+        return self.user_role==self.ROLE_ADMIN
+
+    @property
+    def is_jobseeker(self):
+        return self.user_role==self.ROLE_JOBSEEKER
+
+    @property
+    def is_company(self):
+        return self.user_role==self.ROLE_COMPANY
 
 
 class Job(Base):
     __tablename__ = 'job'
 
     id = db.Column(db.Integer, nullable=False, primary_key=True)
-    jobName = db.Column(db.String(255), nullable=False)
-    jobTag = db.Column(db.String(255), nullable=False)
-    jobDescription = db.Column(db.String(4096), nullable=False)
-    jobAddress = db.Column(db.String(1024), nullable=False)
-    jobSalaryL = db.Column(db.Integer, nullable=False)
-    jobSalaryH = db.Column(db.Integer, nullable=False)
-    jobExperience = db.Column(db.String(255), nullable=False)
-    jobEducation = db.Column(db.String(255), nullable=False)
-    jobCompany = db.Column(db.Integer, nullable=False)
+    job_name = db.Column(db.String(255), nullable=False)
+    job_tag = db.Column(db.String(255), nullable=False)
+    job_description = db.Column(db.String(4096), nullable=False)
+    job_address = db.Column(db.String(1024), nullable=False)
+    job_salary_l = db.Column(db.Integer, nullable=False)
+    job_salary_h = db.Column(db.Integer, nullable=False)
+    job_experience = db.Column(db.String(255), nullable=False)
+    job_education = db.Column(db.String(255), nullable=False)
+    job_company = db.Column(db.Integer, db.ForeignKey('company.id') ,nullable=False)
+
 
 
 class Delivery(Base):

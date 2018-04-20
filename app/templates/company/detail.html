@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <div class="container">
+            <img src="https://static.lagou.com/thumbnail_160x160/image1/M00/00/24/Cgo8PFTUWHyANEpfAABnz-1mqGc824.jpg"
+                 alt="" class="pull-left">
+            <h3>{{ company.user_name }}</h3>
+            <p>{{ company.company.company_introduction }}</p>
+            <p>{{ company.company.company_homepage }}</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-8">
+            <ul class="nav nav-tabs list-title">
+                <li role="presentation" class="active"><a href="#">公司介绍</a></li>
+                <li role="presentation"><a href="#">在招职位</a></li>
+            </ul>
+            <div class="description">
+                {{ company.company.company_description }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>公司基本信息</h3>
+            <p>领域:{{ company.company.company_field }}</p>
+            <p>融资:{{ company.company.company_financing }}</p>
+            <p>城市:{{ company.company.company_city }}</p>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

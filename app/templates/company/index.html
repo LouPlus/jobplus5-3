@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>TODO:公司过滤</h1>
+        </div>
+    </div>
+    <div class="container">
+     {% for company in company_list %}
+        <div class="col-md-3">
+            <div class="company">
+                <a href="{{ url_for('company.detail',company_id=company.id) }}">
+                    <img src="https://static.lagou.com/thumbnail_160x160/i/image2/M00/13/BF/CgotOVnwYgKAQxwQAADd4llXXGw444.png" alt="">
+                    <h3>{{ company.user_name }}</h3>
+                    <p>{{ company.company.company_introduction }}</p>
+                    <hr>
+                    <p>在招职位:7</p>
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+
+{% endblock %}

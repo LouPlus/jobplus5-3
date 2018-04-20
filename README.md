@@ -16,40 +16,48 @@ LouPlus Team 3 <https://www.shiyanlou.com/louplus/python>
 
 字段           | 类型           | 注解
 :----------- | :----------- | :-----
-userId       | INT(10)      | 用户ID
-userName     | VARCHAR(255) | 用户姓名
-userEmail    | VARCHAR(255) | 登录邮箱
-userPassword | VARCHAR(255) | 登录密码
-userRole     | INT(10)      | 用户角色
-userPhone    | VARCHAR(255) | 用户电话
-compangHomepage     | VARCHAR(1024) | 公司主页
-companyField        | VARCHAR(20)   | 公司领域
-companyFinancing    | VARCHAR(20)   | 公司融资情况
-companyCity         | VARCHAR(20)   | 公司所在城市
-companyLogo         | VARCHAR(255)  | 公司Logo链接
-companyIntroduction | VARCHAR(1024) | 公司一句话简介
-companyDescription  | VARCHAR(4096) | 公司详细描述
-companySlug         | VARCHAR(255)  | 公司固定链接
-jobseekerName   | VARCHAR(255)  | 求职者名称
-jobseekerResume | VARCHAR(1024) | 简历链接
+id       | INT(10)      | 用户ID
+user_name     | VARCHAR(255) | 用户姓名
+user_email    | VARCHAR(255) | 登录邮箱
+_user_password | VARCHAR(255) | 登录密码
+user_role     | INT(10)      | 用户角色
+user_phone    | VARCHAR(255) | 用户电话
+user_experience|VARCHAR(255) | 求职者工作经验
+user_resume|VARCHAR(255) | 求职者简历链接
 created      | DATETIME     | 数据创建时间
 updated      | DATETIME     | 数据修改时间
 
+>company表
+
+字段           | 类型           | 注解
+:----------- | :----------- | :-----
+id       | INT(10)      | 用户ID
+company_homepage |VARCHAR(20)|公司主页
+company_field|VARCHAR(20)|公司领域
+company_financing|VARCHAR(20)|公司融资情况
+company_city|VARCHAR(20)|公司所在城市
+company_logo|VARCHAR(20)|公司Logo链接
+company_introduction|VARCHAR(1024)|公司一句话简介
+company_description|VARCHAR(4096)|公司详细描述
+company_slug|VARCHAR(20)|公司固定链接
+user_id|INT(10)|对应用户
+created      | DATETIME     | 数据创建时间
+updated      | DATETIME     | 数据修改时间
 
 > job表
 
 字段             | 类型            | 注解
 :------------- | :------------ | :-----
-jobId          | INT(10)       | 工作ID
-jobName        | VARCHAR(255)  | 工作名称
-jobTag         | VARCHAR(255)  | 工作标签
-jobDescription | VARCHAR(4096) | 工作描述
-jobAddress     | VARCHAR(1024) | 工作地点
-jobSalaryL     | INT(10)       | 最低工资
-jobSalaryH     | INT(10)       | 最高工资
-jobExperience  | VARCHAR(255)  | 工作经历
-jobEducation   | VARCHAR(255)  | 学历要求
-jobCompany     | INT(10)       | 所属公司ID
+id          | INT(10)       | 工作ID
+job_name        | VARCHAR(255)  | 工作名称
+job_tag         | VARCHAR(255)  | 工作标签
+job_description | VARCHAR(4096) | 工作描述
+job_address     | VARCHAR(1024) | 工作地点
+job_salary_l     | INT(10)       | 最低工资
+job_salary_h     | INT(10)       | 最高工资
+job_experience  | VARCHAR(255)  | 工作经历
+job_education   | VARCHAR(255)  | 学历要求
+job_company     | INT(10)       | 所属公司ID
 created        | DATETIME      | 数据创建时间
 updated        | DATETIME      | 数据修改时间
 
