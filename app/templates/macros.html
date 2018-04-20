@@ -12,6 +12,10 @@
                 <div class="checkbox">
                     <label>{{ field() }} {{ field.label.text }}</label>
                 </div>
+{#            {% elif field.type=='SelectField' %}#}
+{#                <div class="form-field">#}
+{#                    {{ field(class="") }}#}
+{#                </div>#}
             {% else %}
                 <div class="form-group">
                     {{ field.label }} {{ field(class='form-control') }}

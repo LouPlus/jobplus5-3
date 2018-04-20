@@ -25,9 +25,11 @@ def register_extensions(app):
     login_manager.login_view='home.login'
 
 def register_blueprints(app):
-    from .main import home,admin
+    from .main import home,admin,company,job
     app.register_blueprint(home)
     app.register_blueprint(admin)
+    app.register_blueprint(company)
+    app.register_blueprint(job)
 
 
 from app import models

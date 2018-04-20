@@ -16,8 +16,9 @@
         </div>
         <div class="navbar-left">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">职位</a></li>
-                <li><a href="#">公司</a></li>
+                <li><a href="{{ url_for('job.index') }}">职位</a></li>
+                <li><a href="{{ url_for('company.index') }}">公司</a></li>
+                <li><a href="{{ url_for('company.admin') }}">管理</a></li>
             </ul>
         </div>
         <div class="navbar-right">
@@ -30,13 +31,13 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
-                            <span id="username">{{ current_user.userName }}</span>
+                            <span id="username">{{ current_user.user_name }}</span>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            {% if current_user.userRole==10 %}
+                            {% if current_user.user_role==10 %}
                                 <li><a href="{{ url_for('home.profile',type='jobseeker')}}">我的主页</a></li>
-                                {% elif current_user.userRole==20 %}
+                                {% elif current_user.user_role==20 %}
                                 <li><a href="{{ url_for('home.profile',type='company')}}">我的主页</a></li>
                             {% endif %}
                             <li role="separator" class="divider"></li>

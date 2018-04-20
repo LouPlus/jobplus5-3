@@ -2,27 +2,29 @@ from flask import Blueprint, render_template, redirect, flash, url_for, abort
 from flask_login import login_user, login_required, logout_user, current_user
 
 from app.forms import LoginForm, RegisterForm, JobseekerProfile, CompanyProfile
-from app.models import User, Jobseeker
+from app.models import User, Company, Job
 
 home = Blueprint('home', __name__, url_prefix='/')
 
 
 @home.route('/')
 def index():
-    return render_template("home/index.html")
+    company_list=Company.query.all()
+    job_list=Job.query.all()
+    return render_template("home/index.html",company_list=company_list,job_list=job_list)
 
 
 @home.route('login', methods=['get', 'post'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(userEmail=form.userEmail.data).first()
+        user = User.query.filter_by(user_email=form.user_email.data).first()
         if user!=None:
             login_user(user, True)
             flash('登录成功', 'success')
-            if user.userRole==User.ROLE_JOBSEEKER:
+            if user.is_jobseeker:
                 return redirect(url_for('.profile',type='jobseeker'))
-            elif user.userRole==User.ROLE_COMPANY:
+            elif user.is_company:
                 return redirect(url_for('.profile',type='company'))
             else:
                 abort(404)
@@ -46,11 +48,11 @@ def register(type):
     if type == 'jobseeker':
         # 用户注册
         form_title = '用户注册'
-        form.userName.label.text = '用户名'
+        form.user_name.label.text = '用户名'
     elif type == 'company':
         # 企业注册
         form_title = '企业注册'
-        form.userName.label.text = '企业名称'
+        form.user_name.label.text = '企业名称'
     return render_template('home/register.html', form=form, type=type, form_title=form_title)
 
 
@@ -70,22 +72,22 @@ def profile(type):
         if form.validate_on_submit():
             form.update_profile(user.id)
             return redirect(url_for('.profile',type=type))
-        form.jobseekerExperience.data=user.jobseekerExperience
+        form.jobseeker_experience.data=user.jobseeker_experience
     elif type=='company':
         form=CompanyProfile()
         if form.validate_on_submit():
             form.update_profile(user.id)
             return redirect(url_for('.profile',type=type))
-        form.companyHomepage.data=user.companyHomepage
-        form.companyCity.data=user.companyCity
-        form.companySlug.data=user.companySlug
-        form.companyDescription.data=user.companyDescription
-        form.companyIntroduction.data=user.companyIntroduction
+        form.company_homepage.data = user.company.company_homepage
+        form.company_city.data = user.company.company_city
+        form.company_slug.data = user.company.company_slug
+        form.company_description.data = user.company.company_description
+        form.company_introduction.data = user.company.company_introduction
     else:
         abort(404)
-    form.userName.data= user.userName
-    form.userEmail.data = user.userEmail
-    form.userPhone.data=user.userPhone
+    form.user_name.data= user.user_name
+    form.user_email.data = user.user_email
+    form.user_phone.data=user.user_phone
     return render_template('home/profile.html',form=form,type=type)
 
 @home.route('job')
