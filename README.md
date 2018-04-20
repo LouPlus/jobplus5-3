@@ -28,6 +28,7 @@ created      | DATETIME     | 数据创建时间
 updated      | DATETIME     | 数据修改时间
 
 >company表
+
 字段           | 类型           | 注解
 :----------- | :----------- | :-----
 id       | INT(10)      | 用户ID
