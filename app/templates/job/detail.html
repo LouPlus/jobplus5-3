@@ -40,7 +40,8 @@
             </div>
         </div>
         <div class="col-md-4">
-            <img src="{{ job.Company.company_logo }}" alt="">
+            <img src="{{ job.Company.company_logo }}" alt="" height="96" width="96">
+            <h3>{{ job.Company.user.user_name }}</h3>
             <p>领域:{{ job.Company.company_field }}</p>
             <p>融资:{{ job.Company.company_financing }}</p>
             <p>城市:{{ job.Company.company_city }}</p>

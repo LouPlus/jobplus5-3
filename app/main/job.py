@@ -9,7 +9,7 @@ job = Blueprint('job', __name__, url_prefix='/job')
 @job.route('/')
 def index():
     page=request.args.get('page',default=1,type=int)
-    pagination=Job.query.order_by(Job.create_time.desc()).paginate(page=page,per_page=current_app.config['PER_PAGE'],error_out=False)
+    pagination=Job.query.filter_by(is_open=True).order_by(Job.create_time.desc()).paginate(page=page,per_page=current_app.config['PER_PAGE'],error_out=False)
     return render_template("job/index.html",pagination=pagination)
 
 @job.route('/<int:job_id>')

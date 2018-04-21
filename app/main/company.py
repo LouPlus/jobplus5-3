@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request, current_app, abort
 from flask_login import login_required, current_user
 
 from app import User
@@ -10,14 +10,19 @@ company = Blueprint('company', __name__, url_prefix='/company')
 
 @company.route('/')
 def index():
-    company_list = User.query.filter_by(user_role=User.ROLE_COMPANY).all()
-    return render_template("company/index.html", company_list=company_list)
+    page=request.args.get('page',default=1,type=int)
+    pagination=User.query.filter_by(user_role=User.ROLE_COMPANY).order_by(User.create_time.desc()).paginate(page=page,per_page=current_app.config['PER_PAGE'],error_out=False)
+    return render_template("company/index.html", pagination=pagination)
 
+@company.route('/slug/<string:company_slug>')
+def detail_by_slug(company_slug):
+    company=Company.query.filter_by(company_slug=company_slug).first_or_404()
+    return render_template('company/detail.html', user=company.user)
 
-@company.route('/<int:company_id>')
-def detail(company_id):
-    company = User.query.filter_by(id=company_id).first()
-    return render_template('company/detail.html', company=company)
+@company.route('/detail/<int:user_id>')
+def detail(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    return render_template('company/detail.html', user=user)
 
 
 @company.route('/admin')
@@ -34,14 +39,24 @@ def publish():
     form = publish_job()
     if form.validate_on_submit():
         form.publish(current_user.company)
-        return redirect(url_for('.index'))
+        return redirect(url_for('.admin'))
     return render_template('company/publish.html', form=form,type='create')
 
 
 @company.route('/apply')
 @login_required
 def apply():
-    deliveries=Delivery.query.filter_by(delivery_company=current_user.company.id).all()
+    status=request.args.get('status',default='all',type=str)
+    if status=='all':
+        deliveries = Delivery.query.filter_by(delivery_company=current_user.company.id).all()
+    elif status=='waiting':
+        deliveries = Delivery.query.filter_by(delivery_company=current_user.company.id,delivery_status=Delivery.STATUS_WAITING).all()
+    elif status=='accept':
+        deliveries = Delivery.query.filter_by(delivery_company=current_user.company.id,delivery_status=Delivery.STATUS_ACCEPT).all()
+    elif status=='reject':
+        deliveries = Delivery.query.filter_by(delivery_company=current_user.company.id,delivery_status=Delivery.STATUS_REJECT).all()
+    else:
+        abort(404)
     return render_template('company/apply.html',deliveries=deliveries)
 
 @company.route('/apply/<int:delivery_id>/accept')
@@ -70,6 +85,15 @@ def del_job(job_id):
     db.session.commit()
     return redirect(url_for('.admin'))
 
+@company.route('/close/<int:job_id>')
+@login_required
+def close_job(job_id):
+    open=request.args.get('open',default=False,type=bool)
+    job = Job.query.filter_by(id=job_id).first_or_404()
+    job.is_open=open
+    db.session.add(job)
+    db.session.commit()
+    return redirect(url_for('.admin'))
 
 @company.route('/edit/<int:job_id>',methods=['get','post'])
 @login_required

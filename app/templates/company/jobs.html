@@ -3,32 +3,45 @@
 {% block body %}
     <div class="jumbotron">
         <div class="container">
-            <img src="https://static.lagou.com/thumbnail_160x160/image1/M00/00/24/Cgo8PFTUWHyANEpfAABnz-1mqGc824.jpg"
-                 alt="" class="pull-left">
-            <h3>{{ company.user_name }}</h3>
-            <p>{{ company.company_introduction }}</p>
-            <p>{{ company.company_homepage }}</p>
+
+
+            <div class="col-md-3">
+                <div class="thumbnail">
+                    <img src="https://static.lagou.com/thumbnail_160x160/image1/M00/00/24/Cgo8PFTUWHyANEpfAABnz-1mqGc824.jpg"
+                         alt="">
+                </div>
+
+            </div>
+            <div class="col-md-9">
+                <h3>{{ company.user.user_name }}</h3>
+                <p>{{ company.company_introduction }}</p>
+                <p>{{ company.company_homepage }}</p>
+            </div>
         </div>
     </div>
     <div class="container">
         <div class="col-md-8">
             <ul class="nav nav-tabs list-title">
-                <li role="presentation"><a href="{{ url_for('company.detail',company_id=company.id) }}">公司介绍</a>
+                <li role="presentation"><a href="{{ url_for('company.detail',user_id=company.user.id) }}">公司介绍</a>
                 </li>
                 <li role="presentation" class="active"><a
-                        href="{{ url_for('company.open_jobs',company_id=company.id) }}">在招职位</a></li>
+                        href="{{ url_for('company.open_jobs',company_id=company.id) }}">在招职位({{ company.job|length }})</a>
+                </li>
             </ul>
             <div class="company-jobs">
                 {% for job in company.job %}
-                    <div class="job-item">
-                        <a href="">
-                            <h4>{{ job.job_name }}</h4>
-                            <p>
-                                <span class="job-salary">{{ job.job_salary_l }}-{{ job.job_salary_h }}</span>
-                                <span class="job-meta">经验{{ job.job_experience }}年/{{ job.job_education }}</span>
-                            </p>
-                        </a>
-                    </div>
+                    {% if job.is_open %}
+                        <div class="job-item">
+                            <a href="{{ url_for('job.detail',job_id=job.id) }}">
+                                <h4>{{ job.job_name }}</h4>
+                                <p>
+                                    <span class="job-salary">{{ job.job_salary_l }}-{{ job.job_salary_h }}</span>
+                                    <span class="job-meta">经验{{ job.job_experience }} / 学历{{ job.job_education }}</span>
+                                </p>
+                            </a>
+                        </div>
+                    {% endif %}
+
                 {% endfor %}
 
             </div>

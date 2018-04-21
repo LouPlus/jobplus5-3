@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from 'macros.html' import render_pagination %}
 
 {% block body %}
     <div class="jumbotron">
@@ -7,19 +8,23 @@
         </div>
     </div>
     <div class="container">
-     {% for company in company_list %}
-        <div class="col-md-3">
-            <div class="company">
-                <a href="{{ url_for('company.detail',company_id=company.id) }}">
-                    <img src="https://static.lagou.com/thumbnail_160x160/i/image2/M00/13/BF/CgotOVnwYgKAQxwQAADd4llXXGw444.png" alt="">
-                    <h3>{{ company.user_name }}</h3>
-                    <p>{{ company.company.company_introduction }}</p>
-                    <hr>
-                    <p>在招职位:7</p>
-                </a>
-            </div>
+        <div class="clearfix">
+            {% for user in pagination.items %}
+                <div class="col-md-3">
+                    <div class="company">
+                        <a href="{{ url_for('company.detail',user_id=user.id) }}">
+                            <img src="{{ user.company.company_logo }}"
+                                 alt="" width="100px" height="100px">
+                            <h3>{{ user.user_name }}</h3>
+                            <p>{{ user.company.company_introduction }}</p>
+                        </a>
+                        <hr>
+                        <p>在招职位:{{ user.company.job|length }}</p>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+        {{ render_pagination(pagination,'job.index') }}
     </div>
 
 

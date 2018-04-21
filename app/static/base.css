@@ -8,6 +8,14 @@
     padding: 20px 100px;
 }
 
+a,
+a:hover,
+a:visited {
+    cursor: pointer;
+    color: #333;
+    text-decoration: none !important;
+}
+
 .list-title {
     margin: 0 15px;
 }
@@ -53,4 +61,10 @@
 .job-meta,
 .timesince {
     color: #999;
+}
+a.btn-admin{
+    color: #5cb85c;
+    width: 100%;
+    background-color: #ffffff;
+    margin-bottom: 5px;
 }

@@ -30,7 +30,7 @@
                                     alt="" class="pull-left" width="40px" height="40px"></a>
                         </div>
                         <div class="media-right">
-                            <a href="{{ url_for('company.detail',company_id=job.Company.id) }}"><h4 class="media-heading">{{ job.Company.user.user_name }}</h4>
+                            <a href="{{ url_for('company.detail',user_id=job.Company.user.id) }}"><h4 class="media-heading">{{ job.Company.user.user_name }}</h4>
                             </a>
                             <span>{{ job.Company.company_introduction }}</span>
                         </div>
