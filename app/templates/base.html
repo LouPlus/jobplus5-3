@@ -18,7 +18,11 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('job.index') }}">职位</a></li>
                 <li><a href="{{ url_for('company.index') }}">公司</a></li>
-                <li><a href="{{ url_for('company.admin') }}">管理</a></li>
+                {% if  current_user.is_authenticated %}
+                    {% if current_user.user_role==20 %}
+                        <li><a href="{{ url_for('company.admin') }}">管理</a></li>
+                    {% endif %}
+                {% endif %}
             </ul>
         </div>
         <div class="navbar-right">
@@ -36,9 +40,9 @@
                         </a>
                         <ul class="dropdown-menu">
                             {% if current_user.user_role==10 %}
-                                <li><a href="{{ url_for('home.profile',type='jobseeker')}}">我的主页</a></li>
-                                {% elif current_user.user_role==20 %}
-                                <li><a href="{{ url_for('home.profile',type='company')}}">我的主页</a></li>
+                                <li><a href="{{ url_for('home.profile',type='jobseeker') }}">我的主页</a></li>
+                            {% elif current_user.user_role==20 %}
+                                <li><a href="{{ url_for('home.profile',type='company') }}">我的主页</a></li>
                             {% endif %}
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ url_for('home.logout') }}">退出登录</a></li>

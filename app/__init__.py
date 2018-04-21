@@ -1,9 +1,25 @@
+import datetime
+
 from flask import Flask
 from flask_migrate import Migrate
 from app.models import db, User
 from config import configs
 from flask_login import LoginManager
 
+def timesince(time):
+    now = datetime.datetime.utcnow()
+    delta = now - time
+    if delta.days > 365:
+        return '{}年前'.format(delta.days // 365)
+    if delta.days > 30:
+        return '{}月前'.format(delta.days // 30)
+    if delta.days > 0:
+        return '{}天前'.format(delta.days)
+    if delta.seconds > 3600:
+        return '{}小时前'.format(delta.seconds // 3600)
+    if delta.seconds > 60:
+        return '{}分钟前'.format(delta.seconds // 60)
+    return '刚刚'
 
 def create_app(config):
     app = Flask(__name__)
@@ -15,6 +31,8 @@ def create_app(config):
 def register_extensions(app):
     db.init_app(app)
     Migrate(app,db)
+
+    app.jinja_env.filters['timesince']=timesince
     login_manager=LoginManager()
     login_manager.init_app(app)
 

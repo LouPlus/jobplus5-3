@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container">
+        <div class="col-md-3">
+            <h3>公司管理</h3>
+            <div class="list-group">
+                <a href="{{ url_for('company.admin') }}" class="list-group-item">职位管理</a>
+                <a href="{{ url_for('company.apply') }}" class="list-group-item">投递管理</a>
+            </div>
+            <a href="{{ url_for('company.apply',status='waiting') }}" class="btn  btn-admin btn-success">未处理</a>
+            <a href="{{ url_for('company.apply',status='accept') }}" class="btn  btn-admin btn-success">面试</a>
+            <a href="{{ url_for('company.apply',status='reject') }}" class="btn  btn-admin btn-success">不合适</a>
+
+        </div>
+        <div class="col-md-9">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>职位名称</th>
+                    <th>求职者姓名</th>
+                    <th>简历</th>
+                    <th>投递时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for delivery in deliveries %}
+                    <tr>
+                        <td>{{ delivery.id }}</td>
+                        <td>{{ delivery.job.job_name }}</td>
+                        <td>{{ delivery.user.user_name }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="">查看</a>
+                            </div>
+                        </td>
+                        <td>{{ delivery.create_time }}</td>
+                        <td>
+                            <div class="btn-group">
+                                {% if delivery.delivery_status==3 %}
+                                    <span>已邀请面试</span>
+                                    <a href="{{ url_for('company.reject',delivery_id=delivery.id) }}">拒绝</a>
+                                {% elif delivery.delivery_status==2 %}
+                                    <span>已拒绝</span>
+                                    <a href="{{ url_for('company.accept',delivery_id=delivery.id) }}">面试</a>
+                                {% elif delivery.delivery_status==2 %}
+                                    <a href="{{ url_for('company.accept',delivery_id=delivery.id) }}">面试</a>
+                                    <a href="{{ url_for('company.reject',delivery_id=delivery.id) }}">拒绝</a>
+                                {% endif %}
+                            </div>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

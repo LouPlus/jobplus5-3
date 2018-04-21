@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField,IntegerField,FileField,TextAreaField,SelectField
 from wtforms.validators import DataRequired, Email, Length, ValidationError,EqualTo,InputRequired
 
-from app.models import User, db, Company, Job
+from app.models import User, db, Company, Job, Tag
 
 
 class LoginForm(FlaskForm):
@@ -76,8 +76,8 @@ class JobseekerProfile(FlaskForm):
     user_email=StringField('邮箱',validators=[DataRequired('注册失败'),Email()])
     password=PasswordField('密码(不填表示保持不变)')
     user_phone=StringField('手机号')
-    jobseeker_experience=IntegerField('工作年限')
-    jobseeker_resume=FileField('上传简历')
+    user_experience=IntegerField('工作年限')
+    user_resume=FileField('上传简历')
     submit=SubmitField('提交')
 
     def update_profile(self,user_id):
@@ -93,9 +93,9 @@ class publish_job(FlaskForm):
     job_salary_l = StringField('最低薪酬', validators=[DataRequired('发布失败'), Length(min=1)])
     job_salary_h = StringField('最高薪酬', validators=[DataRequired('发布失败'), Length(min=1)])
     job_address = StringField('工作地点', validators=[DataRequired('发布失败'), Length(min=1)])
-    job_tag = StringField('职位标签（多个用,隔开）', validators=[DataRequired('发布失败'), Length(min=1)])
-    job_experience = SelectField('经验要求(年)',choices=[('1','不限'),('1',"1"),('2',"2"),('3',"3"),('4',"1-3"),('5',"3-5"),('6',"5+")])
-    job_education = SelectField('学历要求',choices=[('0',"不限"),('1',"专科"),('2',"本科"),('3',"硕士"),('4',"博士")])
+    tags = StringField('职位标签（多个用,隔开）', validators=[DataRequired('发布失败'), Length(min=1)])
+    job_experience = SelectField('经验要求(年)',choices=[('不限','不限'),('1年',"1年"),('2年',"2年"),('3年',"3年"),('1-3年',"1-3年"),('3-5年',"3-5年"),('5+年',"5+年")])
+    job_education = SelectField('学历要求',choices=[('不限',"不限"),('专科',"专科"),('本科',"本科"),('硕士',"硕士"),('博士',"博士")])
     job_description = TextAreaField('职位描述', validators=[DataRequired('发布失败'), Length(min=1)])
     submit = SubmitField('提交')
 
@@ -103,9 +103,32 @@ class publish_job(FlaskForm):
         job=Job()
         self.populate_obj(job)
         job.job_company=company.id
+        tags=self.tags.data.split(',')
+        for tag_name in tags:
+            tag=Tag.query.filter_by(tag_name=tag_name).first()
+            if tag==None:
+                tag=Tag()
+                tag.tag_name = tag_name
+            job.job_tag.append(tag)
         db.session.add(job)
         db.session.commit()
         return job
+
+    def update(self,job):
+        self.populate_obj(job)
+        # tags = self.tags.data.split(',')
+        # for tag_name in tags:
+        #     tag = Tag.query.filter_by(tag_name=tag_name).first()
+        #     if tag == None:
+        #         tag = Tag()
+        #         tag.tag_name = tag_name
+        #     job.job_tag.append(tag)
+        db.session.add(job)
+        db.session.commit()
+        return job
+
+
+
 
 
 

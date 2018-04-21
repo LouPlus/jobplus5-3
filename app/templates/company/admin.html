@@ -5,10 +5,10 @@
         <div class="col-md-3">
             <h3>公司管理</h3>
             <div class="list-group">
-                <a href="/" class="list-group-item">职位管理</a>
-                <a href="/" class="list-group-item">投递管理</a>
+                <a href="{{ url_for('company.admin') }}" class="list-group-item">职位管理</a>
+                <a href="{{ url_for('company.apply') }}" class="list-group-item">投递管理</a>
             </div>
-            <a href="{{ url_for('company.publish') }}" class="btn  btn-lg btn-success">发布职位</a>
+            <a href="{{ url_for('company.publish') }}" class="btn  btn-admin btn-success">发布职位</a>
         </div>
         <div class="col-md-9">
             <table class="table">
@@ -30,9 +30,13 @@
                         <td>{{ job.create_time }}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="">下线</a>
-                                <a href="">编辑</a>
-                                <a href="">删除</a>
+                                {% if job.is_open %}
+                                    <a href="{{ url_for('company.close_job',job_id=job.id) }}">下线</a>
+                                {% else %}
+                                    <a href="{{ url_for('company.close_job',job_id=job.id,open=True) }}">上线</a>
+                                {% endif %}
+                                <a href="{{ url_for('company.edit_job',job_id=job.id) }}">编辑</a>
+                                <a href="{{ url_for('company.del_job',job_id=job.id) }}">删除</a>
                             </div>
                         </td>
                     </tr>
