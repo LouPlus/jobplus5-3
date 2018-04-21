@@ -11,7 +11,7 @@ class BaseConfig(object):
 class DevelopmentConfig(BaseConfig):
     """ 开发环境配置 """
     DEBUG = True
-    ADMIN_PER_PAGE=10
+    PER_PAGE=10
     SQLALCHEMY_DATABASE_URI = 'mysql://root@localhost:3306/jobplus?charset=utf8'
 
 class ProductionConfig(BaseConfig):

@@ -10,7 +10,11 @@
             </div>
         </div>
         <div class="col-md-9">
-            {{ render_form(form,url_for('company.publish')) }}
+            {% if type=='create' %}
+                {{ render_form(form,url_for('company.publish')) }}
+            {% elif type=='edit' %}
+                {{ render_form(form,url_for('company.edit_job',job_id=job_id)) }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

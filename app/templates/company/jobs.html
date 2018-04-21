@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <div class="container">
+            <img src="https://static.lagou.com/thumbnail_160x160/image1/M00/00/24/Cgo8PFTUWHyANEpfAABnz-1mqGc824.jpg"
+                 alt="" class="pull-left">
+            <h3>{{ company.user_name }}</h3>
+            <p>{{ company.company_introduction }}</p>
+            <p>{{ company.company_homepage }}</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-8">
+            <ul class="nav nav-tabs list-title">
+                <li role="presentation"><a href="{{ url_for('company.detail',company_id=company.id) }}">公司介绍</a>
+                </li>
+                <li role="presentation" class="active"><a
+                        href="{{ url_for('company.open_jobs',company_id=company.id) }}">在招职位</a></li>
+            </ul>
+            <div class="company-jobs">
+                {% for job in company.job %}
+                    <div class="job-item">
+                        <a href="">
+                            <h4>{{ job.job_name }}</h4>
+                            <p>
+                                <span class="job-salary">{{ job.job_salary_l }}-{{ job.job_salary_h }}</span>
+                                <span class="job-meta">经验{{ job.job_experience }}年/{{ job.job_education }}</span>
+                            </p>
+                        </a>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>公司基本信息</h3>
+            <p>领域:{{ company.company_field }}</p>
+            <p>融资:{{ company.company_financing }}</p>
+            <p>城市:{{ company.company_city }}</p>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

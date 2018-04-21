@@ -13,8 +13,8 @@
     <div class="container">
         <div class="col-md-8">
             <ul class="nav nav-tabs list-title">
-                <li role="presentation" class="active"><a href="#">公司介绍</a></li>
-                <li role="presentation"><a href="#">在招职位</a></li>
+                <li role="presentation" class="active"><a href="{{ url_for('company.detail',company_id=company.id) }}">公司介绍</a></li>
+                <li role="presentation"><a href="{{ url_for('company.open_jobs',company_id=company.id) }}">在招职位</a></li>
             </ul>
             <div class="description">
                 {{ company.company.company_description }}

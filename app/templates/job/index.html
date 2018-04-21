@@ -1,10 +1,47 @@
 {% extends 'base.html' %}
-
+{% from 'macros.html' import render_pagination %}
 {% block body %}
-
     <div class="jumbotron">
         <div class="container">
             <h1>Todo:职位过滤</h1>
         </div>
+    </div>
+    <div class="container">
+        <div class="clearfix">
+            {% for job in pagination.items %}
+            <div class="col-md-4">
+                <div class="job">
+                    <div class="caption">
+                        <a href="{{ url_for('job.detail',job_id=job.id) }}">
+                            <h3>{{ job.job_name }}</h3>
+                        </a>
+                        <p>经验{{ job.job_experience }} 学历{{ job.job_education }}</p>
+                        <div>{% for tag in job.job_tag %}
+                            <span class="label label-default">{{ tag.tag_name }}</span>
+                        {% endfor %}
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="media">
+                        <div class="media-left">
+                            <a href=""><img
+                                    src="https://static.lagou.com/thumbnail_160x160/image1/M00/00/24/Cgo8PFTUWHyANEpfAABnz-1mqGc824.jpg"
+                                    alt="" class="pull-left" width="40px" height="40px"></a>
+                        </div>
+                        <div class="media-right">
+                            <a href="{{ url_for('company.detail',company_id=job.Company.id) }}"><h4 class="media-heading">{{ job.Company.user.user_name }}</h4>
+                            </a>
+                            <span>{{ job.Company.company_introduction }}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+
+        </div>
+
+        {{ render_pagination(pagination,'job.index') }}
     </div>
 {% endblock %}

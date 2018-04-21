@@ -9,8 +9,8 @@ home = Blueprint('home', __name__, url_prefix='/')
 
 @home.route('/')
 def index():
-    company_list=Company.query.all()
-    job_list=Job.query.all()
+    company_list=Company.query.order_by(Company.create_time.desc()).limit(12).all()
+    job_list=Job.query.order_by(Job.create_time.desc()).limit(9).all()
     return render_template("home/index.html",company_list=company_list,job_list=job_list)
 
 
@@ -72,7 +72,7 @@ def profile(type):
         if form.validate_on_submit():
             form.update_profile(user.id)
             return redirect(url_for('.profile',type=type))
-        form.jobseeker_experience.data=user.jobseeker_experience
+        form.user_experience.data=user.user_experience
     elif type=='company':
         form=CompanyProfile()
         if form.validate_on_submit():
@@ -90,11 +90,3 @@ def profile(type):
     form.user_phone.data=user.user_phone
     return render_template('home/profile.html',form=form,type=type)
 
-@home.route('job')
-def job_list():
-    pass
-
-
-@home.route('company')
-def company_list():
-    pass

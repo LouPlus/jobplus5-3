@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="col-md-8">
+                <h3>{{ job.job_name }}</h3>
+                <span class="timesince">{{ job.create_time | timesince }}发布</span>
+                <p>{{ job.job_salary_l }}-{{ job.job_salary_h }} 经验{{ job.job_experience }}
+                    学历{{ job.job_education }}</p>
+            </div>
+            <div class="col-md-4">
+                {% if  current_user.is_authenticated and current_user.user_role==10 %}
+                    {% if not job.current_user_is_apply %}
+                        <div class="show-more">
+                            <a href="{{ url_for('job.apply',job_id=job.id) }}" class="btn btn-lg btn-success">投递简历</a>
+                        </div>
+                    {% else %}
+                        <div class="show-more">
+                            <a href="#" class="btn btn-lg btn-success">已投递</a>
+                        </div>
+                    {% endif %}
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-8">
+            <h3>职位标签</h3>
+            <div class="description">
+                <div>{% for tag in job.job_tag %}
+                    <span class="label label-default">{{ tag.tag_name }}</span>
+                {% endfor %}
+                </div>
+            </div>
+            <h3>职位描述</h3>
+            <div class="description">
+                {{ job.job_description }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img src="{{ job.Company.company_logo }}" alt="">
+            <p>领域:{{ job.Company.company_field }}</p>
+            <p>融资:{{ job.Company.company_financing }}</p>
+            <p>城市:{{ job.Company.company_city }}</p>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}
